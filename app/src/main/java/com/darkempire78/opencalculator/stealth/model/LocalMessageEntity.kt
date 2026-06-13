@@ -16,5 +16,6 @@ data class LocalMessageEntity(
     val timestamp: Long,
     val statusTick: Int,
     val isImported: Boolean,
-    val mediaLocalPath: String? = null
+    val mediaLocalPath: String? = null,
+    val mediaUrl: String? = null
 )

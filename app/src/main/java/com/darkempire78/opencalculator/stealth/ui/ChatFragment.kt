@@ -241,7 +241,13 @@ class ChatFragment : Fragment() {
         }
 
         binding.stickerTrayRecyclerView.visibility = View.VISIBLE
-        // TODO: Implement sticker tray adapter
+        binding.stickerTrayRecyclerView.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        // Sticker adapter would be implemented here for sending sticker media
+        // For now, stickers are displayed but not yet sent
     }
 
     private fun toggleStickerTray() {

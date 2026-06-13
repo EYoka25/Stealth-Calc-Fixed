@@ -43,6 +43,7 @@ class ChatRepository(context: Context) {
     private var currentRoomId: String? = null
     private var reconnectAttempts = 0
     private val maxReconnectAttempts = 5
+    private var messageCollectorJob: kotlinx.coroutines.Job? = null
 
     fun init(serverUrl: String) {
         ktorClient = KtorClient(serverUrl)
@@ -72,6 +73,9 @@ class ChatRepository(context: Context) {
         val token = sessionManager.isAuthenticated().let { if (it) sessionManager.getAuthToken() else null } ?: return
         currentRoomId = roomId
 
+        // Cancel previous message collector to prevent duplicates
+        messageCollectorJob?.cancel()
+
         scope.launch {
             try {
                 ktorClient?.connectWebSocket(roomId, token ?: "")
@@ -82,9 +86,14 @@ class ChatRepository(context: Context) {
             }
         }
 
-        scope.launch {
-            ktorClient?.incomingMessages?.receiveAsFlow()?.collect { payload ->
-                handleIncomingMessage(payload)
+        messageCollectorJob = scope.launch {
+            try {
+                ktorClient?.incomingMessages?.receiveAsFlow()?.collect { payload ->
+                    handleIncomingMessage(payload)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Message collection error", e)
+                handleReconnect()
             }
         }
     }
@@ -98,7 +107,8 @@ class ChatRepository(context: Context) {
             timestamp = payload.timestamp,
             statusTick = payload.statusTick,
             isImported = false,
-            mediaLocalPath = payload.mediaUrl
+            mediaLocalPath = payload.mediaUrl,
+            mediaUrl = payload.mediaUrl
         )
         dao.insertMessage(entity)
 
@@ -149,7 +159,8 @@ class ChatRepository(context: Context) {
             timestamp = timestamp,
             statusTick = 0,
             isImported = false,
-            mediaLocalPath = mediaUrl
+            mediaLocalPath = mediaUrl,
+            mediaUrl = mediaUrl
         )
         dao.insertMessage(entity)
 
@@ -184,7 +195,7 @@ class ChatRepository(context: Context) {
                     isOutgoing = entity.senderAlias == alias,
                     statusTick = entity.statusTick,
                     mediaLocalPath = entity.mediaLocalPath,
-                    mediaUrl = entity.mediaLocalPath // Restore mediaUrl from persisted path
+                    mediaUrl = entity.mediaUrl ?: entity.mediaLocalPath // Use mediaUrl if available, fallback to path
                 )
             }
             _messagesFlow.emit(messages)
@@ -213,6 +224,7 @@ class ChatRepository(context: Context) {
     }
 
     fun cleanup() {
+        messageCollectorJob?.cancel()
         disconnect()
         scope.cancel()
         ktorClient?.close()

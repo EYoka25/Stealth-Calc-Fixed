@@ -87,9 +87,15 @@ class HiddenChatActivity : AppCompatActivity() {
         currentScrollIndex = index
     }
 
+    fun logout() {
+        sessionManager.clearSession()
+        chatRepository.cleanup()
+        showLoginFragment()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         lifecycle.removeObserver(stealthObserver)
-        chatRepository.disconnect()
+        chatRepository.cleanup()
     }
 }

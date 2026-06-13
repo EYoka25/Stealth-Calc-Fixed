@@ -86,9 +86,13 @@ class KtorClient(private val baseUrl: String) {
 
     suspend fun connectWebSocket(roomId: String, token: String) {
         try {
+            val url = java.net.URL(baseUrl)
+            val host = url.host ?: "localhost"
+            val port = if (url.port > 0) url.port else (if (url.protocol == "https") 443 else 80)
+            
             wsSession = client.webSocketSession(
-                host = baseUrl.replace("http://", "").replace("https://", "").split(":").first(),
-                port = baseUrl.split(":").lastOrNull()?.toIntOrNull() ?: 8080,
+                host = host,
+                port = port,
                 path = "/chat/$roomId"
             ) {
                 header("Authorization", "Bearer $token")
