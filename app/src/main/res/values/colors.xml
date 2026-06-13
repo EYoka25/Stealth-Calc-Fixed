@@ -7,9 +7,45 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Normal Light Theme (Fallbacks) -->
+    <color name="foreground_color">#EFEFEF</color>
+    <color name="background_color">#FFFFFF</color>
+    <color name="popup_background_color">#FFFFFF</color>
+    <color name="history_background_color">#F5F5F5</color>
+    <color name="text_color">#212121</color>
+    <color name="text_second_color">#757575</color>
+    <color name="text_third_color">#9E9E9E</color>
+    <color name="text_category_color">#757575</color>
+    <color name="button_color">#F5F5F5</color>
+    <color name="button_symbol_color">#0070BC</color>
+    <color name="button_clear_color">#00BA20</color>
+    <color name="button_equals_color">#B3004D</color>
+    <color name="button_ripple_color">#BDBDBD</color>
+    <color name="switch_primary_color">#0070BC</color>
+    <color name="switch_on_primary_color">#FFFFFF</color>
+    <color name="switch_surface_variant_color">#E0E0E0</color>
+
+    <!-- Amoled Theme -->
+    <color name="amoled_background_color">#000000</color>
+    <color name="amoled_foreground_color">#000000</color>
+    <color name="amoled_popup_background_color">#121212</color>
+    <color name="amoled_history_background_color">#121212</color>
+    <color name="amoled_text_color">#EFEFEF</color>
+    <color name="amoled_text_second_color">#BDBDBD</color>
+    <color name="amoled_text_third_color">#B1B1B1</color>
+    <color name="amoled_text_category_color">#B1B1B1</color>
+    <color name="amoled_button_color">#000000</color>
+    <color name="amoled_button_symbol_color">#0070BC</color>
+    <color name="amoled_button_clear_color">#00BA20</color>
+    <color name="amoled_button_equals_color">#B3004D</color>
+    <color name="amoled_button_ripple_color">#333333</color>
+    <color name="amoled_separator_color">#121212</color>
+    <color name="amoled_switch_primary_color">#0070BC</color>
+    <color name="amoled_switch_on_primary_color">#000000</color>
     
     <!-- ==================== STEALTH CHAT UI ==================== -->
-    <!-- These were previously duplicated in stealth_colors.xml -->
     <color name="chat_background">#FF121212</color>
     <color name="message_sent_text">#FFFFFFFF</color>
     <color name="message_received_text">#FFE0E0E0</color>
@@ -17,5 +53,10 @@
     <color name="sender_name_color">#FF81D4FA</color>
     <color name="status_connecting">#FFFFB74D</color>
     <color name="status_background">#FF1E1E1E</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="message_received_background">#FF2C2C2C</color>
+    <color name="message_sent_background">#FF005C4B</color>
+    <color name="tick_blue">#FF53BDEB</color>
+    <color name="tick_grey">#FF8696A0</color>
+    <color name="app_icon_background_color">#FFFFFF</color>
+    <color name="calculation_error_color">#FFD32F2F</color>
 </resources>

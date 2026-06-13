@@ -20,6 +20,7 @@ import com.darkempire78.opencalculator.stealth.importer.WhatsAppTxtImporter
 import com.darkempire78.opencalculator.stealth.model.ChatMessage
 import com.darkempire78.opencalculator.stealth.model.LocalMessageEntity
 import com.darkempire78.opencalculator.stealth.network.ChatRepository
+import com.darkempire78.opencalculator.stealth.StealthPreferences
 import com.darkempire78.opencalculator.stealth.ui.adapter.ChatMessageAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -283,6 +284,8 @@ class ChatFragment : Fragment() {
                     // Also update the encrypted prefs directly to be sure
                     val stealthPrefs = StealthPreferences(requireContext())
                     stealthPrefs.setSenderAlias(newAlias)
+                    // Reload messages to update "isOutgoing" state
+                    loadMessages()
                     Toast.makeText(requireContext(), R.string.stealth_alias_updated, Toast.LENGTH_SHORT).show()
                 }
             }
