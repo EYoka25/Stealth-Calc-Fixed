@@ -9,15 +9,14 @@ import io.ktor.http.content.MultiPartData
 import io.ktor.http.content.PartData
 import io.ktor.http.content.forEachPart
 import io.ktor.http.content.streamProvider
-import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.request.receive
 import io.ktor.server.request.receiveMultipart
 import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
-import io.ktor.server.routing.routing
 // Added the serialization import
 import kotlinx.serialization.Serializable
 
@@ -28,12 +27,11 @@ data class ErrorResponse(val error: String)
 @Serializable
 data class HealthResponse(val status: String, val timestamp: Long)
 
-fun Application.configureRouting() {
+fun Route.configureRouting() {
     val roomService = RoomService()
     val storageService = StorageService()
 
-    routing {
-        route("/api") {
+    route("/api") {
             // Room authentication
             post("/auth/room") {
                 val request = call.receive<RoomAuthRequest>()
@@ -113,5 +111,4 @@ fun Application.configureRouting() {
                 )
             }
         }
-    }
 }

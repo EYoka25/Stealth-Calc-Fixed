@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Open Calculator"
+rootProject.name = "Stealth-Calc"
 include(":app")
 include(":backend")

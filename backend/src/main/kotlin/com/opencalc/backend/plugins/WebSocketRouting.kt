@@ -5,9 +5,8 @@ import com.opencalc.backend.model.DeliveryReceipt
 import com.opencalc.backend.service.ConnectionRegistry
 import com.opencalc.backend.service.JwtService
 import com.opencalc.backend.service.RoomService
-import io.ktor.server.application.Application
 import io.ktor.server.application.call
-import io.ktor.server.routing.routing
+import io.ktor.server.routing.Route
 import io.ktor.server.websocket.WebSocketServerSession
 import io.ktor.server.websocket.webSocket
 import io.ktor.websocket.CloseReason
@@ -18,11 +17,10 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.UUID
 
-fun Application.configureWebSockets() {
+fun Route.configureWebSockets() {
     val roomService = RoomService()
 
-    routing {
-        webSocket("/chat/{roomId}") {
+    webSocket("/chat/{roomId}") {
             val roomId = call.parameters["roomId"] ?: run {
                 close(CloseReason(CloseReason.Codes.VIOLATED_POLICY, "Room ID required"))
                 return@webSocket
@@ -89,5 +87,4 @@ fun Application.configureWebSockets() {
                 println("WebSocket disconnected: room=$roomId, session=$sessionId")
             }
         }
-    }
 }
