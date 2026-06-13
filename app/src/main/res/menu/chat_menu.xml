@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_import_chat"
+        android:title="@string/stealth_import_chat"
+        android:orderInCategory="100" />
+
+    <item
+        android:id="@+id/action_sync_stickers"
+        android:title="@string/stealth_sync_stickers"
+        android:orderInCategory="200" />
+
+    <item
+        android:id="@+id/action_change_alias"
+        android:title="@string/stealth_change_alias"
+        android:orderInCategory="300" />
+
+    <item
+        android:id="@+id/action_disconnect"
+        android:title="@string/stealth_disconnect"
+        android:orderInCategory="400" />
+
+</menu>
