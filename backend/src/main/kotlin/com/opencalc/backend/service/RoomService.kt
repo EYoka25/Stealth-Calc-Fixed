@@ -60,6 +60,24 @@ class RoomService {
         }
     }
 
+    fun createRoom(request: RoomCreateRequest): RoomAuthResponse {
+        return transaction {
+            val existingRoom = RoomsTable.select { RoomsTable.id eq request.roomId }.firstOrNull()
+            if (existingRoom != null) {
+                return@transaction RoomAuthResponse(success = false, error = "Room already exists")
+            }
+
+            val passwordHash = request.passwordHash?.let { BCrypt.hashpw(it, BCrypt.gensalt()) }
+            RoomsTable.insert {
+                it[id] = request.roomId
+                it[RoomsTable.passwordHash] = passwordHash
+            }
+
+            val token = JwtService.generateToken(request.roomId)
+            RoomAuthResponse(success = true, token = token)
+        }
+    }
+
     fun getRoom(roomId: String): Room? {
         return transaction {
             RoomsTable.select { RoomsTable.id eq roomId }.firstOrNull()?.let { row ->

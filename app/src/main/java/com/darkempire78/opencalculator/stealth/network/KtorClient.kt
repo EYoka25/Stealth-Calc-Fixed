@@ -4,6 +4,7 @@ import android.util.Log
 import com.darkempire78.opencalculator.stealth.model.MediaUploadResponse
 import com.darkempire78.opencalculator.stealth.model.RoomAuthRequest
 import com.darkempire78.opencalculator.stealth.model.RoomAuthResponse
+import com.darkempire78.opencalculator.stealth.model.RoomCreateRequest
 import com.darkempire78.opencalculator.stealth.model.WsMessagePayload
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -81,6 +82,24 @@ class KtorClient(private val baseUrl: String) {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Auth error", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun createRoom(roomId: String, password: String? = null): Result<RoomAuthResponse> {
+        return try {
+            val response: HttpResponse = client.post("$baseUrl/api/room/create") {
+                contentType(ContentType.Application.Json)
+                setBody(RoomCreateRequest(roomId, password))
+            }
+            val body = response.body<RoomAuthResponse>()
+            if (body.success) {
+                Result.success(body)
+            } else {
+                Result.failure(Exception(body.error ?: "Creation failed"))
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Create error", e)
             Result.failure(e)
         }
     }

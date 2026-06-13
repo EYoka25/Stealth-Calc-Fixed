@@ -245,14 +245,17 @@
     <string name="keep_the_calculator_visible_on_your_lock_screen_for_quick_and_easy_access_disable_to_hide_it_when_your_screen_is_locked">Keep the calculator visible on your lock screen for quick and easy access. Disable to hide it when your screen is locked.</string>
 
     <!-- Stealth Chat -->
-    <string name="stealth_login_title">Join Room</string>
-    <string name="stealth_login_subtitle">Enter room credentials to connect</string>
+    <string name="stealth_login_title">Stealth Chat</string>
+    <string name="stealth_login_subtitle">Connect securely with your peers</string>
+    <string name="stealth_join_room">Join Room</string>
+    <string name="stealth_create_room">Create Room</string>
     <string name="stealth_room_id_hint">Room ID</string>
     <string name="stealth_room_id_required">Room ID is required</string>
     <string name="stealth_password_hint">Room Password (optional)</string>
     <string name="stealth_alias_hint">Your Alias</string>
     <string name="stealth_alias_required">Alias is required</string>
     <string name="stealth_connect_button">Connect</string>
+    <string name="stealth_create_button">Create &amp; Join</string>
     <string name="stealth_server_settings">Server Settings</string>
     <string name="stealth_server_url_hint">http://10.0.2.2:8080</string>
     <string name="stealth_server_url_saved">Server URL saved</string>

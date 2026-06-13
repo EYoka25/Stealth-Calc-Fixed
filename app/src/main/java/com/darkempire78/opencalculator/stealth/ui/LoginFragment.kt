@@ -48,6 +48,16 @@ class LoginFragment : Fragment() {
         // Pre-fill alias if exists
         binding.aliasEditText.setText(sessionManager.getSenderAlias())
 
+        binding.modeToggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked) {
+                if (checkedId == R.id.createModeButton) {
+                    binding.connectButton.text = getString(R.string.stealth_create_button)
+                } else {
+                    binding.connectButton.text = getString(R.string.stealth_connect_button)
+                }
+            }
+        }
+
         binding.connectButton.setOnClickListener {
             attemptConnection()
         }
@@ -61,6 +71,7 @@ class LoginFragment : Fragment() {
         val roomId = binding.roomIdEditText.text.toString().trim()
         val password = binding.passwordEditText.text.toString().trim()
         val alias = binding.aliasEditText.text.toString().trim()
+        val isCreateMode = binding.modeToggleGroup.checkedButtonId == R.id.createModeButton
 
         if (roomId.isEmpty()) {
             binding.roomIdInputLayout.error = getString(R.string.stealth_room_id_required)
@@ -80,7 +91,11 @@ class LoginFragment : Fragment() {
         binding.connectButton.isEnabled = false
 
         lifecycleScope.launch {
-            val result = chatRepository.authenticate(roomId, effectivePassword, alias)
+            val result = if (isCreateMode) {
+                chatRepository.createRoom(roomId, effectivePassword, alias)
+            } else {
+                chatRepository.authenticate(roomId, effectivePassword, alias)
+            }
 
             withContext(Dispatchers.Main) {
                 binding.loginProgressBar.visibility = View.GONE

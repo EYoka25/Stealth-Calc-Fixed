@@ -70,6 +70,25 @@ class ChatRepository(context: Context) {
         }
     }
 
+    suspend fun createRoom(roomId: String, password: String?, alias: String): Result<String> {
+        return try {
+            val client = ktorClient ?: return Result.failure(Exception("Client not initialized"))
+            val result = client.createRoom(roomId, password)
+            result.fold(
+                onSuccess = { response ->
+                    val token = response.token ?: return Result.failure(Exception("No token"))
+                    sessionManager.saveSession(roomId, token, alias)
+                    currentRoomId = roomId
+                    Result.success(token)
+                },
+                onFailure = { Result.failure(it) }
+            )
+        } catch (e: Exception) {
+            Log.e(TAG, "Create error", e)
+            Result.failure(e)
+        }
+    }
+
     fun connectWebSocket() {
         val roomId = currentRoomId ?: sessionManager.getCurrentRoomId() ?: return
         val token = sessionManager.isAuthenticated().let { if (it) sessionManager.getAuthToken() else null } ?: return

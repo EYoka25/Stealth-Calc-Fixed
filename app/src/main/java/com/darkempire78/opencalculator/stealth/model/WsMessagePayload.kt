@@ -25,3 +25,10 @@ data class RoomAuthResponse(
     val token: String? = null,
     val error: String? = null
 )
+
+@Serializable
+data class RoomCreateRequest(
+    val roomId: String,
+    val passwordHash: String? = null,
+    val maxParticipants: Int = 50
+)

@@ -2,6 +2,7 @@ package com.opencalc.backend.plugins
 
 import com.opencalc.backend.model.MediaUploadResponse
 import com.opencalc.backend.model.RoomAuthRequest
+import com.opencalc.backend.model.RoomCreateRequest
 import com.opencalc.backend.service.RoomService
 import com.opencalc.backend.service.StorageService
 import io.ktor.http.HttpStatusCode
@@ -40,6 +41,17 @@ fun Route.configureRouting() {
                     call.respond(HttpStatusCode.OK, response)
                 } else {
                     call.respond(HttpStatusCode.Unauthorized, response)
+                }
+            }
+
+            // Create room
+            post("/room/create") {
+                val request = call.receive<RoomCreateRequest>()
+                val response = roomService.createRoom(request)
+                if (response.success) {
+                    call.respond(HttpStatusCode.Created, response)
+                } else {
+                    call.respond(HttpStatusCode.Conflict, response)
                 }
             }
 
