@@ -344,7 +344,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initStealthTrigger() {
         val stealthEngine = StealthTriggerEngine(
-            getResultDisplayText = { binding.resultDisplay.text.toString() },
+            getInputText = { binding.input.text.toString() },
             onTrigger = {
                 val intent = HiddenChatActivity.createIntent(this)
                 startActivity(intent)
