@@ -350,7 +350,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         )
-        stealthEngine.attachToButtons(binding.squareButton, binding.equalsButton)
+        stealthEngine.attachToButton(binding.subtractButton)
     }
 
     private fun handleOnLockScreenAppStatus(canShow: Boolean) {
