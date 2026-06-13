@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Open Calculator"
 include(":app")
+include(":backend")

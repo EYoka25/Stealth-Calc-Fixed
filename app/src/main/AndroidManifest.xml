@@ -38,6 +38,8 @@
         <activity
             android:name=".stealth.ui.HiddenChatActivity"
             android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme" />
 
