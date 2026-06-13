@@ -30,7 +30,7 @@ class ChatMessageAdapter : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(Dif
         }
 
         override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean {
-            return oldItem == newItem.copy(payloadText = newItem.payloadText)
+            return oldItem == newItem
         }
     }
 

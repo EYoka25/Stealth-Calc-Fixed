@@ -187,7 +187,7 @@ class ChatFragment : Fragment() {
                     binding.chatRecyclerView.scrollToPosition(currentList.size - 1)
                 }
                 // Save scroll position
-                (activity as? HiddenChatActivity)?.updateScrollIndex(currentList.size - 1)
+                (requireActivity() as? HiddenChatActivity)?.updateScrollIndex(currentList.size - 1)
             }
         }
     }
@@ -252,7 +252,7 @@ class ChatFragment : Fragment() {
     private fun disconnectAndExit() {
         sessionManager.clearSession()
         chatRepository.disconnect()
-        (activity as? HiddenChatActivity)?.finish()
+        (requireActivity() as? HiddenChatActivity)?.finish()
     }
 
     private fun showChangeAliasDialog() {
@@ -266,7 +266,7 @@ class ChatFragment : Fragment() {
             .setPositiveButton(getString(R.string.stealth_save)) { _, _ ->
                 val newAlias = editText.text.toString().trim()
                 if (newAlias.isNotEmpty()) {
-                    // Note: In a real implementation, you'd want to update the alias in the backend too
+                    sessionManager.saveSession(roomId, sessionManager.getAuthToken() ?: "", newAlias)
                     Toast.makeText(requireContext(), R.string.stealth_alias_updated, Toast.LENGTH_SHORT).show()
                 }
             }

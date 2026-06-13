@@ -15,6 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -182,7 +183,8 @@ class ChatRepository(context: Context) {
                     timestamp = entity.timestamp,
                     isOutgoing = entity.senderAlias == alias,
                     statusTick = entity.statusTick,
-                    mediaLocalPath = entity.mediaLocalPath
+                    mediaLocalPath = entity.mediaLocalPath,
+                    mediaUrl = entity.mediaLocalPath // Restore mediaUrl from persisted path
                 )
             }
             _messagesFlow.emit(messages)

@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.darkempire78.opencalculator.R
 import com.darkempire78.opencalculator.databinding.FragmentLoginBinding
 import com.darkempire78.opencalculator.stealth.SessionManager
+import com.darkempire78.opencalculator.stealth.network.ChatRepository
 import com.darkempire78.opencalculator.stealth.StealthPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,7 +88,7 @@ class LoginFragment : Fragment() {
                 result.fold(
                     onSuccess = { token ->
                         stealthPrefs.setSenderAlias(alias)
-                        (activity as? HiddenChatActivity)?.showChatFragment(roomId)
+                        (requireActivity() as? HiddenChatActivity)?.showChatFragment(roomId)
                     },
                     onFailure = { error ->
                         Toast.makeText(
