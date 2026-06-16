@@ -1,10 +1,12 @@
 # Build stage
-FROM gradle:8.5-jdk17 AS builder
+FROM eclipse-temurin:17-jdk AS builder
 
 WORKDIR /app
 COPY . .
 
-RUN gradle :backend:shadowJar --no-daemon
+# Use the wrapper to ensure correct Gradle version
+RUN chmod +x gradlew
+RUN ./gradlew :backend:shadowJar --no-daemon
 
 # Runtime stage
 FROM eclipse-temurin:17-jre-alpine
